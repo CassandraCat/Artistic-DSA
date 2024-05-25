@@ -8,7 +8,7 @@ function quickSort(arr) {
   const mid = [];
   const right = [];
 
-  for (let i = 0; i < arr.length - 1; i++) {
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i] < pivot) {
       left.push(arr[i]);
     } else if (arr[i] === pivot) {
@@ -18,12 +18,10 @@ function quickSort(arr) {
     }
   }
 
-  mid.push(pivot);
-
   return [...quickSort(left), ...mid, ...quickSort(right)];
 }
 
 // Example usage:
-const array = [5, 2, 9, 1, 7, 6, 3];
+const array = [5, 2, 9, 1, 1, 7, 6, 3, 2, 5, 6, 3];
 const sortedArray = quickSort(array);
 console.log(sortedArray);
