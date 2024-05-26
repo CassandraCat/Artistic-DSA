@@ -100,6 +100,26 @@ function postOrderTraverseWithIteration(node) {
   }
 }
 
+function sequenceTraverse(node) {
+  const queue = [];
+
+  queue.push(node);
+
+  while (queue.length > 0) {
+    const current = queue.shift();
+
+    console.log(current.value);
+
+    if (current.left) {
+      queue.push(current.left);
+    }
+
+    if (current.right) {
+      queue.push(current.right);
+    }
+  }
+}
+
 // test
 const root = new TreeNode(1);
 root.left = new TreeNode(2);
@@ -122,3 +142,6 @@ console.log("In-order Traversal with Iteration");
 inOrderTraverseWithIteration(root);
 console.log("Post-order Traversal with Iteration");
 postOrderTraverseWithIteration(root);
+
+console.log("Sequence Traversal");
+sequenceTraverse(root);
