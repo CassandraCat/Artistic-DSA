@@ -120,6 +120,86 @@ function sequenceTraverse(node) {
   }
 }
 
+function getTreeMaxWidthWithMap(root) {
+  if (!root) {
+    return 0;
+  }
+
+  const queue = [];
+  const map = new Map();
+
+  queue.push(root);
+  map.set(root, 1);
+
+  let currentLevel = 1;
+  let currentLevelNodes = 0;
+  let maxWidth = 0;
+
+  while (queue.length > 0) {
+    const current = queue.shift();
+    const currentLevelOfCurrent = map.get(current);
+
+    if (currentLevelOfCurrent === currentLevel) {
+      currentLevelNodes++;
+    } else {
+      maxWidth = Math.max(maxWidth, currentLevelNodes);
+      currentLevel++;
+      currentLevelNodes = 1;
+    }
+
+    if (current.left) {
+      map.set(current.left, currentLevelOfCurrent + 1);
+      queue.push(current.left);
+    }
+
+    if (current.right) {
+      map.set(current.right, currentLevelOfCurrent + 1);
+      queue.push(current.right);
+    }
+  }
+
+  maxWidth = Math.max(maxWidth, currentLevelNodes);
+  return maxWidth;
+}
+
+function getTreeMaxWidthNoMap(root) {
+  if (!root) {
+    return 0;
+  }
+
+  const queue = [];
+  queue.push(root);
+
+  let currentEnd = root;
+  let nextEnd = null;
+  let currentLevelNodes = 0;
+  let maxWidth = 0;
+
+  while (queue.length > 0) {
+    const current = queue.shift();
+
+    if (current.left) {
+      queue.push(current.left);
+      nextEnd = current.left;
+    }
+
+    if (current.right) {
+      queue.push(current.right);
+      nextEnd = current.right;
+    }
+
+    currentLevelNodes++;
+
+    if (currentEnd === current) {
+      maxWidth = Math.max(maxWidth, currentLevelNodes);
+      currentLevelNodes = 0;
+      currentEnd = nextEnd;
+    }
+  }
+
+  return maxWidth;
+}
+
 // test
 const root = new TreeNode(1);
 root.left = new TreeNode(2);
@@ -145,3 +225,7 @@ postOrderTraverseWithIteration(root);
 
 console.log("Sequence Traversal");
 sequenceTraverse(root);
+
+console.log("Max Width of Tree");
+console.log(getTreeMaxWidthWithMap(root));
+console.log(getTreeMaxWidthNoMap(root));
