@@ -1,4 +1,4 @@
-class Node {
+class GraphNode {
   constructor(value) {
     this.value = value;
     this.in = 0;
@@ -30,10 +30,10 @@ function createGraph(matrix) {
     const to = matrix[i][1];
     const weight = matrix[i][2];
     if (!graph.nodes.has(from)) {
-      graph.nodes.set(from, new Node(from));
+      graph.nodes.set(from, new GraphNode(from));
     }
     if (!graph.nodes.has(to)) {
-      graph.nodes.set(to, new Node(to));
+      graph.nodes.set(to, new GraphNode(to));
     }
     const fromNode = graph.nodes.get(from);
     const toNode = graph.nodes.get(to);
@@ -45,3 +45,7 @@ function createGraph(matrix) {
     graph.edges.add(newEdge);
   }
 }
+
+module.exports = {
+  createGraph,
+};
