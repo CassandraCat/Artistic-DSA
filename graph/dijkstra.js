@@ -1,3 +1,5 @@
+const DijkstraHeap = require("../heap/DijkstraHeap");
+
 function dijkstra(node) {
   const distanceMap = new Map();
   const touchedNodes = new Set();
@@ -29,4 +31,22 @@ function getMinDistanceAndUnSelectedNode(distanceMap, touchedNodes) {
     }
   }
   return minNode;
+}
+
+function dijkstraWithHeap(node, size) {
+  const heap = new DijkstraHeap(size);
+  heap.bubbleUp(node, 0);
+  const result = new Map();
+
+  while (heap.size > 0) {
+    const record = heap.pop();
+    const distance = record.distance;
+    const current = record.node;
+    for (const edge of current.edges) {
+      heap.addOrUpdateOrIgnore(edge.to, distance + edge.weight);
+    }
+    result.set(current, distance);
+  }
+
+  return result;
 }
