@@ -84,6 +84,10 @@ class PriorityQueue {
 
     this.heap[index] = element;
   }
+
+  size() {
+    return this.heap.length;
+  }
 }
 
 module.exports = PriorityQueue;
