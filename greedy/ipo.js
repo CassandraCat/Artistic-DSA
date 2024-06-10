@@ -1,4 +1,4 @@
-const PriorityQueue = require("./PriorityQueue");
+const PriorityQueue = require("../heap/PriorityQueue");
 
 class Node {
   constructor(profit, capital) {

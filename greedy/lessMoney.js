@@ -1,4 +1,4 @@
-const MinHeap = require("./MinHeap");
+const MinHeap = require("../heap/MinHeap");
 
 function lessMoney(arr) {
   const minHeap = new MinHeap();
