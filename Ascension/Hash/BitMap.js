@@ -1,24 +1,24 @@
 class BitMap {
-  constructor(size) {
-    this.size = size;
-    this.bits = new Array(Math.ceil(size / 32)).fill(0);
-  }
-
-  getStatus(index) {
-    const numIndex = index / 32;
-    const bitIndex = index % 32;
-    return (this.bits[numIndex] >> bitIndex) & 1;
-  }
-
-  setStatus(index, status) {
-    const numIndex = index / 32;
-    const bitIndex = index % 32;
-    if (status === 1) {
-      this.bits[numIndex] |= 1 << bitIndex;
-    } else {
-      this.bits[numIndex] &= ~(1 << bitIndex);
+    constructor(size) {
+        this.size = size;
+        this.bits = new Array(Math.ceil(size / 32)).fill(0);
     }
-  }
+
+    getStatus(index) {
+        const numIndex = index / 32;
+        const bitIndex = index % 32;
+        return (this.bits[numIndex] >> bitIndex) & 1;
+    }
+
+    setStatus(index, status) {
+        const numIndex = index / 32;
+        const bitIndex = index % 32;
+        if (status === 1) {
+            this.bits[numIndex] |= 1 << bitIndex;
+        } else {
+            this.bits[numIndex] &= ~(1 << bitIndex);
+        }
+    }
 }
 
 // Test

@@ -1,35 +1,35 @@
 class TreeNode {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-    this.parent = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+        this.parent = null;
+    }
 }
 
 function getSuccessorNode(node) {
-  if (!node) return null;
-  if (node.right) {
-    return getLeftMostChild(node.right);
-  } else {
-    return getRightMostParent(node);
-  }
+    if (!node) return null;
+    if (node.right) {
+        return getLeftMostChild(node.right);
+    } else {
+        return getRightMostParent(node);
+    }
 }
 
 function getLeftMostChild(node) {
-  while (node.left) {
-    node = node.left;
-  }
-  return node;
+    while (node.left) {
+        node = node.left;
+    }
+    return node;
 }
 
 function getRightMostParent(node) {
-  let parent = node.parent;
-  while (parent && parent.right === node) {
-    node = parent;
-    parent = parent.parent;
-  }
-  return parent;
+    let parent = node.parent;
+    while (parent && parent.right === node) {
+        node = parent;
+        parent = parent.parent;
+    }
+    return parent;
 }
 
 // test

@@ -4,21 +4,21 @@
  */
 
 function binarySearch(arr, target) {
-  let left = 0;
-  let right = arr.length - 1;
+    let left = 0;
+    let right = arr.length - 1;
 
-  while (left <= right) {
-    let mid = left + ((right - left) >> 1);
-    if (arr[mid] === target) {
-      return mid;
-    } else if (arr[mid] < target) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
+    while (left <= right) {
+        let mid = left + ((right - left) >> 1);
+        if (arr[mid] === target) {
+            return mid;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
     }
-  }
 
-  return -1;
+    return -1;
 }
 
 // test
@@ -33,25 +33,25 @@ console.log(res); // 2
  */
 
 function binarySearchLeft(arr, target) {
-  let left = 0;
-  let right = arr.length - 1;
+    let left = 0;
+    let right = arr.length - 1;
 
-  while (left <= right) {
-    let mid = left + ((right - left) >> 1);
-    if (arr[mid] === target) {
-      right = mid - 1;
-    } else if (arr[mid] < target) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
+    while (left <= right) {
+        let mid = left + ((right - left) >> 1);
+        if (arr[mid] === target) {
+            right = mid - 1;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
     }
-  }
 
-  if (left >= arr.length || arr[left] !== target) {
-    return -1;
-  }
+    if (left >= arr.length || arr[left] !== target) {
+        return -1;
+    }
 
-  return left;
+    return left;
 }
 
 // test
@@ -66,32 +66,32 @@ console.log(res2); // 2
  */
 
 function findLocalMinimum(arr) {
-  if (arr == null || arr.length === 0) {
-    return -1;
-  }
-
-  if (arr.length === 1 || arr[0] < arr[1]) {
-    return 0;
-  }
-
-  if (arr[arr.length - 1] < arr[arr.length - 2]) {
-    return arr.length - 1;
-  }
-
-  let left = 1;
-  let right = arr.length - 2;
-  while (left < right) {
-    let mid = left + ((right - left) >> 1);
-    if (arr[mid] > arr[mid - 1]) {
-      right = mid - 1;
-    } else if (arr[mid] > arr[mid + 1]) {
-      left = mid + 1;
-    } else {
-      return mid;
+    if (arr == null || arr.length === 0) {
+        return -1;
     }
-  }
 
-  return left;
+    if (arr.length === 1 || arr[0] < arr[1]) {
+        return 0;
+    }
+
+    if (arr[arr.length - 1] < arr[arr.length - 2]) {
+        return arr.length - 1;
+    }
+
+    let left = 1;
+    let right = arr.length - 2;
+    while (left < right) {
+        let mid = left + ((right - left) >> 1);
+        if (arr[mid] > arr[mid - 1]) {
+            right = mid - 1;
+        } else if (arr[mid] > arr[mid + 1]) {
+            left = mid + 1;
+        } else {
+            return mid;
+        }
+    }
+
+    return left;
 }
 
 // test

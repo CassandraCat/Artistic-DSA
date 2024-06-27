@@ -1,37 +1,40 @@
 class TreeNode {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
 }
 
 class ReturnData {
-  constructor(isBalanced, height) {
-    this.isBalanced = isBalanced;
-    this.height = height;
-  }
+    constructor(isBalanced, height) {
+        this.isBalanced = isBalanced;
+        this.height = height;
+    }
 }
 
 function isBalancedTree(root) {
-  if (!root) return true;
+    if (!root) return true;
 
-  return isBalancedTreeHelper(root).isBalanced;
+    return isBalancedTreeHelper(root).isBalanced;
 }
 
 function isBalancedTreeHelper(root) {
-  if (!root) return new ReturnData(true, 0);
+    if (!root) return new ReturnData(true, 0);
 
-  const leftData = isBalancedTreeHelper(root.left);
-  if (!leftData.isBalanced) return leftData;
-  const rightData = isBalancedTreeHelper(root.right);
-  if (!rightData.isBalanced) return rightData;
+    const leftData = isBalancedTreeHelper(root.left);
+    if (!leftData.isBalanced) return leftData;
+    const rightData = isBalancedTreeHelper(root.right);
+    if (!rightData.isBalanced) return rightData;
 
-  if (Math.abs(leftData.height - rightData.height) > 1) {
-    return new ReturnData(false, 0);
-  }
+    if (Math.abs(leftData.height - rightData.height) > 1) {
+        return new ReturnData(false, 0);
+    }
 
-  return new ReturnData(true, Math.max(leftData.height, rightData.height) + 1);
+    return new ReturnData(
+        true,
+        Math.max(leftData.height, rightData.height) + 1
+    );
 }
 
 // test

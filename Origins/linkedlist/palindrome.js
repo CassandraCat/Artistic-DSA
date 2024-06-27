@@ -1,105 +1,105 @@
 class Node {
-  constructor(value) {
-    this.value = value;
-    this.next = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
 }
 
 class LinkedList {
-  constructor() {
-    this.head = null;
-  }
-
-  insert(value) {
-    const node = new Node(value);
-    if (!this.head) {
-      this.head = node;
-      return;
+    constructor() {
+        this.head = null;
     }
 
-    let current = this.head;
-    while (current.next !== null) {
-      current = current.next;
-    }
-    current.next = node;
-  }
+    insert(value) {
+        const node = new Node(value);
+        if (!this.head) {
+            this.head = node;
+            return;
+        }
 
-  print() {
-    let current = this.head;
-    while (current !== null) {
-      console.log(current.value);
-      current = current.next;
+        let current = this.head;
+        while (current.next !== null) {
+            current = current.next;
+        }
+        current.next = node;
     }
-  }
 
-  length() {
-    let current = this.head;
-    let count = 0;
-    while (current !== null) {
-      count++;
-      current = current.next;
+    print() {
+        let current = this.head;
+        while (current !== null) {
+            console.log(current.value);
+            current = current.next;
+        }
     }
-    return count;
-  }
+
+    length() {
+        let current = this.head;
+        let count = 0;
+        while (current !== null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
 }
 
 function isPalindromeUseStack(list) {
-  let head = list.head;
-  if (!head || !head.next) {
-    return true;
-  }
-
-  const stack = [];
-  let slow = head;
-  while (head !== null) {
-    stack.push(head.value);
-    head = head.next;
-  }
-
-  while (slow !== null) {
-    if (slow.value !== stack.pop()) {
-      return false;
+    let head = list.head;
+    if (!head || !head.next) {
+        return true;
     }
-    slow = slow.next;
-  }
 
-  return true;
+    const stack = [];
+    let slow = head;
+    while (head !== null) {
+        stack.push(head.value);
+        head = head.next;
+    }
+
+    while (slow !== null) {
+        if (slow.value !== stack.pop()) {
+            return false;
+        }
+        slow = slow.next;
+    }
+
+    return true;
 }
 
 function isPalindrome(list) {
-  let head = list.head;
-  if (!head || !head.next) {
-    return true;
-  }
-
-  const pivot = list.length() >> 1;
-
-  let current = head;
-  for (let i = 1; i < pivot; i++) {
-    current = current.next;
-  }
-
-  let next = current.next;
-  let temp = null;
-  current.next = null;
-  while (next !== null) {
-    temp = next.next;
-    next.next = current;
-    current = next;
-    next = temp;
-  }
-
-  let left = head;
-  let right = current;
-  while (left !== null && right !== null) {
-    if (left.value !== right.value) {
-      return false;
+    let head = list.head;
+    if (!head || !head.next) {
+        return true;
     }
-    left = left.next;
-    right = right.next;
-  }
 
-  return true;
+    const pivot = list.length() >> 1;
+
+    let current = head;
+    for (let i = 1; i < pivot; i++) {
+        current = current.next;
+    }
+
+    let next = current.next;
+    let temp = null;
+    current.next = null;
+    while (next !== null) {
+        temp = next.next;
+        next.next = current;
+        current = next;
+        next = temp;
+    }
+
+    let left = head;
+    let right = current;
+    while (left !== null && right !== null) {
+        if (left.value !== right.value) {
+            return false;
+        }
+        left = left.next;
+        right = right.next;
+    }
+
+    return true;
 }
 
 // test

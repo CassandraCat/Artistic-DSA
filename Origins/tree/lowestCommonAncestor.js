@@ -1,21 +1,21 @@
 class TreeNode {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-    this.parent = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+        this.parent = null;
+    }
 }
 
 function lowestCommonAncestor(root, o1, o2) {
-  if (root === null || root === o1 || root === o2) return root;
+    if (root === null || root === o1 || root === o2) return root;
 
-  const left = lowestCommonAncestor(root.left, o1, o2);
-  const right = lowestCommonAncestor(root.right, o1, o2);
+    const left = lowestCommonAncestor(root.left, o1, o2);
+    const right = lowestCommonAncestor(root.right, o1, o2);
 
-  if (left && right) return root;
+    if (left && right) return root;
 
-  return left ? left : right;
+    return left ? left : right;
 }
 
 // test

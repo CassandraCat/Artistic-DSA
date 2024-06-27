@@ -1,56 +1,56 @@
 class TreeNode {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
 }
 
 class ReturnData {
-  constructor(isFull, height) {
-    this.isFull = isFull;
-    this.height = height;
-  }
+    constructor(isFull, height) {
+        this.isFull = isFull;
+        this.height = height;
+    }
 }
 
 function isFullBinaryTree(root) {
-  if (!root) return true;
+    if (!root) return true;
 
-  const queue = [root];
+    const queue = [root];
 
-  while (queue.length) {
-    const node = queue.shift();
+    while (queue.length) {
+        const node = queue.shift();
 
-    if ((node.left && !node.right) || (!node.left && node.right)) {
-      return false;
+        if ((node.left && !node.right) || (!node.left && node.right)) {
+            return false;
+        }
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
     }
 
-    if (node.left) queue.push(node.left);
-    if (node.right) queue.push(node.right);
-  }
-
-  return true;
+    return true;
 }
 
 function isFullBinaryTreeV2(root) {
-  if (!root) return true;
+    if (!root) return true;
 
-  return isFullBinaryTreeHelper(root).isFull;
+    return isFullBinaryTreeHelper(root).isFull;
 }
 
 function isFullBinaryTreeHelper(node) {
-  if (!node) return new ReturnData(true, 0);
+    if (!node) return new ReturnData(true, 0);
 
-  const leftData = isFullBinaryTreeHelper(node.left);
-  if (!leftData.isFull) return leftData;
-  const rightData = isFullBinaryTreeHelper(node.right);
-  if (!rightData.isFull) return rightData;
+    const leftData = isFullBinaryTreeHelper(node.left);
+    if (!leftData.isFull) return leftData;
+    const rightData = isFullBinaryTreeHelper(node.right);
+    if (!rightData.isFull) return rightData;
 
-  if (leftData.height !== rightData.height) {
-    return new ReturnData(false, 0);
-  }
+    if (leftData.height !== rightData.height) {
+        return new ReturnData(false, 0);
+    }
 
-  return new ReturnData(true, leftData.height + 1);
+    return new ReturnData(true, leftData.height + 1);
 }
 
 // test

@@ -5,12 +5,12 @@
  */
 
 function findOddNumber(arr) {
-  let eor = 0;
-  for (let i = 0; i < arr.length; i++) {
-    eor ^= arr[i];
-  }
+    let eor = 0;
+    for (let i = 0; i < arr.length; i++) {
+        eor ^= arr[i];
+    }
 
-  return eor;
+    return eor;
 }
 
 // test
@@ -25,22 +25,22 @@ console.log(res);
  */
 
 function findOddNumber2(arr) {
-  let eor = 0
-  for (let i = 0; i < arr.length; i++) {
-    eor ^= arr[i];
-  }
-
-  // get the rightmost bit 1
-  let rightOne = eor & -eor;
-
-  let onlyOne = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if ((arr[i] & rightOne) !== 0) {
-      onlyOne ^= arr[i];
+    let eor = 0;
+    for (let i = 0; i < arr.length; i++) {
+        eor ^= arr[i];
     }
-  }
 
-  return [onlyOne, eor ^ onlyOne];
+    // get the rightmost bit 1
+    let rightOne = eor & -eor;
+
+    let onlyOne = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if ((arr[i] & rightOne) !== 0) {
+            onlyOne ^= arr[i];
+        }
+    }
+
+    return [onlyOne, eor ^ onlyOne];
 }
 
 // test

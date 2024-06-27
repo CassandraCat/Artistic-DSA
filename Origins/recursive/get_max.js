@@ -1,18 +1,18 @@
 function getMax(arr) {
-  if (!arr || arr.length === 0) {
-    return -1;
-  }
-  return process(arr, 0, arr.length - 1);
+    if (!arr || arr.length === 0) {
+        return -1;
+    }
+    return process(arr, 0, arr.length - 1);
 }
 
 function process(arr, left, right) {
-  if (left === right) {
-    return arr[left];
-  }
-  let mid = Math.floor(((right - left) >> 1) + left);
-  let leftMax = process(arr, left, mid);
-  let rightMax = process(arr, mid + 1, right);
-  return Math.max(leftMax, rightMax);
+    if (left === right) {
+        return arr[left];
+    }
+    let mid = Math.floor(((right - left) >> 1) + left);
+    let leftMax = process(arr, left, mid);
+    let rightMax = process(arr, mid + 1, right);
+    return Math.max(leftMax, rightMax);
 }
 
 // Test

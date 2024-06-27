@@ -1,152 +1,152 @@
 class Node {
-  constructor(value) {
-    this.value = value;
-    this.next = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
 }
 
 class LinkedList {
-  constructor() {
-    this.head = null;
-  }
-
-  insert(value) {
-    const node = new Node(value);
-    if (!this.head) {
-      this.head = node;
-      return;
+    constructor() {
+        this.head = null;
     }
 
-    let current = this.head;
-    while (current.next !== null) {
-      current = current.next;
+    insert(value) {
+        const node = new Node(value);
+        if (!this.head) {
+            this.head = node;
+            return;
+        }
+
+        let current = this.head;
+        while (current.next !== null) {
+            current = current.next;
+        }
+        current.next = node;
     }
-    current.next = node;
-  }
 }
 
 function listIntersect(head1, head2) {
-  if (!head1 || !head2) {
+    if (!head1 || !head2) {
+        return null;
+    }
+
+    const loop1 = getLoopNode(head1);
+    const loop2 = getLoopNode(head2);
+
+    if (!loop1 && !loop2) {
+        return noLoopListIntersect(head1, head2);
+    }
+
+    if (loop1 && loop2) {
+        return loopListIntersect(head1, head2, loop1, loop2);
+    }
+
     return null;
-  }
-
-  const loop1 = getLoopNode(head1);
-  const loop2 = getLoopNode(head2);
-
-  if (!loop1 && !loop2) {
-    return noLoopListIntersect(head1, head2);
-  }
-
-  if (loop1 && loop2) {
-    return loopListIntersect(head1, head2, loop1, loop2);
-  }
-
-  return null;
 }
 
 function noLoopListIntersect(head1, head2) {
-  let length = 0;
+    let length = 0;
 
-  let current1 = head1;
-  let current2 = head2;
+    let current1 = head1;
+    let current2 = head2;
 
-  while (current1) {
-    length++;
-    current1 = current1.next;
-  }
+    while (current1) {
+        length++;
+        current1 = current1.next;
+    }
 
-  while (current2) {
-    length--;
-    current2 = current2.next;
-  }
+    while (current2) {
+        length--;
+        current2 = current2.next;
+    }
 
-  let longer = length > 0 ? head1 : head2;
-  let shorter = length > 0 ? head2 : head1;
-  length = Math.abs(length);
-  while (length > 0) {
-    length--;
-    longer = longer.next;
-  }
+    let longer = length > 0 ? head1 : head2;
+    let shorter = length > 0 ? head2 : head1;
+    length = Math.abs(length);
+    while (length > 0) {
+        length--;
+        longer = longer.next;
+    }
 
-  while (longer !== shorter) {
-    longer = longer.next;
-    shorter = shorter.next;
-  }
+    while (longer !== shorter) {
+        longer = longer.next;
+        shorter = shorter.next;
+    }
 
-  return longer;
+    return longer;
 }
 
 function loopListIntersect(head1, head2, loop1, loop2) {
-  console.log("loop1", loop1);
-  console.log("loop2", loop2);
-  if (loop1 === loop2) {
-    return noLoopListIntersect(
-      truncateLinkedList(head1, loop1),
-      truncateLinkedList(head2, loop2)
-    );
-  } else {
-    current1 = loop1.next;
-    while (current1 !== loop1) {
-      if (current1 === loop2) {
-        return loop1;
-      }
-      current1 = current1.next;
+    console.log("loop1", loop1);
+    console.log("loop2", loop2);
+    if (loop1 === loop2) {
+        return noLoopListIntersect(
+            truncateLinkedList(head1, loop1),
+            truncateLinkedList(head2, loop2)
+        );
+    } else {
+        current1 = loop1.next;
+        while (current1 !== loop1) {
+            if (current1 === loop2) {
+                return loop1;
+            }
+            current1 = current1.next;
+        }
     }
-  }
 
-  return null;
+    return null;
 }
 
 function getLoopNode(head) {
-  let slow = head;
-  let fast = head;
+    let slow = head;
+    let fast = head;
 
-  while (fast !== null && fast.next !== null) {
-    slow = slow.next;
-    fast = fast.next.next;
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
 
-    if (slow === fast) {
-      break;
+        if (slow === fast) {
+            break;
+        }
     }
-  }
 
-  if (fast === null || fast.next === null) {
-    return null;
-  }
+    if (fast === null || fast.next === null) {
+        return null;
+    }
 
-  slow = head;
-  while (slow !== fast) {
-    slow = slow.next;
-    fast = fast.next;
-  }
+    slow = head;
+    while (slow !== fast) {
+        slow = slow.next;
+        fast = fast.next;
+    }
 
-  return slow;
+    return slow;
 }
 
 function truncateLinkedList(head, target) {
-  if (head === null || target === null) {
-    return head;
-  }
-
-  let current = head;
-
-  while (current !== null) {
-    if (current === target) {
-      current.next = null;
-      break;
+    if (head === null || target === null) {
+        return head;
     }
-    current = current.next;
-  }
 
-  return head;
+    let current = head;
+
+    while (current !== null) {
+        if (current === target) {
+            current.next = null;
+            break;
+        }
+        current = current.next;
+    }
+
+    return head;
 }
 
 function printLinkedList(head) {
-  let current = head;
-  while (current !== null) {
-    console.log(current.value);
-    current = current.next;
-  }
+    let current = head;
+    while (current !== null) {
+        console.log(current.value);
+        current = current.next;
+    }
 }
 
 // Test1 - No loop Intersect

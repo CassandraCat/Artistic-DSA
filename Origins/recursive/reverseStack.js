@@ -1,22 +1,22 @@
 function reverse(stack) {
-  if (stack.length === 0) {
-    return stack;
-  }
+    if (stack.length === 0) {
+        return stack;
+    }
 
-  const last = process(stack);
-  reverse(stack);
-  stack.push(last);
+    const last = process(stack);
+    reverse(stack);
+    stack.push(last);
 }
 
 function process(stack) {
-  const result = stack.pop();
-  if (stack.length === 0) {
-    return result;
-  }
+    const result = stack.pop();
+    if (stack.length === 0) {
+        return result;
+    }
 
-  const last = process(stack);
-  stack.push(result);
-  return last;
+    const last = process(stack);
+    stack.push(result);
+    return last;
 }
 
 // Test

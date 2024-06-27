@@ -1,203 +1,203 @@
 class TreeNode {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
 }
 
 function preOrderTraverseWithRecursion(node) {
-  if (!node) {
-    return;
-  }
+    if (!node) {
+        return;
+    }
 
-  console.log(node.value);
-  preOrderTraverseWithRecursion(node.left);
-  preOrderTraverseWithRecursion(node.right);
+    console.log(node.value);
+    preOrderTraverseWithRecursion(node.left);
+    preOrderTraverseWithRecursion(node.right);
 }
 
 function inOrderTraverseWithRecursion(node) {
-  if (!node) {
-    return;
-  }
+    if (!node) {
+        return;
+    }
 
-  inOrderTraverseWithRecursion(node.left);
-  console.log(node.value);
-  inOrderTraverseWithRecursion(node.right);
+    inOrderTraverseWithRecursion(node.left);
+    console.log(node.value);
+    inOrderTraverseWithRecursion(node.right);
 }
 
 function postOrderTraverseWithRecursion(node) {
-  if (!node) {
-    return;
-  }
+    if (!node) {
+        return;
+    }
 
-  postOrderTraverseWithRecursion(node.left);
-  postOrderTraverseWithRecursion(node.right);
-  console.log(node.value);
+    postOrderTraverseWithRecursion(node.left);
+    postOrderTraverseWithRecursion(node.right);
+    console.log(node.value);
 }
 
 function preOrderTraverseWithIteration(node) {
-  const stack = [];
+    const stack = [];
 
-  stack.push(node);
+    stack.push(node);
 
-  while (stack.length > 0) {
-    const current = stack.pop();
+    while (stack.length > 0) {
+        const current = stack.pop();
 
-    console.log(current.value);
+        console.log(current.value);
 
-    if (current.right) {
-      stack.push(current.right);
+        if (current.right) {
+            stack.push(current.right);
+        }
+
+        if (current.left) {
+            stack.push(current.left);
+        }
     }
-
-    if (current.left) {
-      stack.push(current.left);
-    }
-  }
 }
 
 function inOrderTraverseWithIteration(node) {
-  const stack = [];
+    const stack = [];
 
-  let current = node;
+    let current = node;
 
-  while (current || stack.length > 0) {
-    while (current) {
-      stack.push(current);
-      current = current.left;
+    while (current || stack.length > 0) {
+        while (current) {
+            stack.push(current);
+            current = current.left;
+        }
+
+        current = stack.pop();
+
+        console.log(current.value);
+
+        current = current.right;
     }
-
-    current = stack.pop();
-
-    console.log(current.value);
-
-    current = current.right;
-  }
 }
 
 function postOrderTraverseWithIteration(node) {
-  const stack1 = [];
-  const stack2 = [];
+    const stack1 = [];
+    const stack2 = [];
 
-  stack1.push(node);
+    stack1.push(node);
 
-  while (stack1.length > 0) {
-    const current = stack1.pop();
+    while (stack1.length > 0) {
+        const current = stack1.pop();
 
-    stack2.push(current);
+        stack2.push(current);
 
-    if (current.left) {
-      stack1.push(current.left);
+        if (current.left) {
+            stack1.push(current.left);
+        }
+
+        if (current.right) {
+            stack1.push(current.right);
+        }
     }
 
-    if (current.right) {
-      stack1.push(current.right);
+    while (stack2.length > 0) {
+        console.log(stack2.pop().value);
     }
-  }
-
-  while (stack2.length > 0) {
-    console.log(stack2.pop().value);
-  }
 }
 
 function sequenceTraverse(node) {
-  const queue = [];
+    const queue = [];
 
-  queue.push(node);
+    queue.push(node);
 
-  while (queue.length > 0) {
-    const current = queue.shift();
+    while (queue.length > 0) {
+        const current = queue.shift();
 
-    console.log(current.value);
+        console.log(current.value);
 
-    if (current.left) {
-      queue.push(current.left);
+        if (current.left) {
+            queue.push(current.left);
+        }
+
+        if (current.right) {
+            queue.push(current.right);
+        }
     }
-
-    if (current.right) {
-      queue.push(current.right);
-    }
-  }
 }
 
 function getTreeMaxWidthWithMap(root) {
-  if (!root) {
-    return 0;
-  }
-
-  const queue = [];
-  const map = new Map();
-
-  queue.push(root);
-  map.set(root, 1);
-
-  let currentLevel = 1;
-  let currentLevelNodes = 0;
-  let maxWidth = 0;
-
-  while (queue.length > 0) {
-    const current = queue.shift();
-    const currentLevelOfCurrent = map.get(current);
-
-    if (currentLevelOfCurrent === currentLevel) {
-      currentLevelNodes++;
-    } else {
-      maxWidth = Math.max(maxWidth, currentLevelNodes);
-      currentLevel++;
-      currentLevelNodes = 1;
+    if (!root) {
+        return 0;
     }
 
-    if (current.left) {
-      map.set(current.left, currentLevelOfCurrent + 1);
-      queue.push(current.left);
+    const queue = [];
+    const map = new Map();
+
+    queue.push(root);
+    map.set(root, 1);
+
+    let currentLevel = 1;
+    let currentLevelNodes = 0;
+    let maxWidth = 0;
+
+    while (queue.length > 0) {
+        const current = queue.shift();
+        const currentLevelOfCurrent = map.get(current);
+
+        if (currentLevelOfCurrent === currentLevel) {
+            currentLevelNodes++;
+        } else {
+            maxWidth = Math.max(maxWidth, currentLevelNodes);
+            currentLevel++;
+            currentLevelNodes = 1;
+        }
+
+        if (current.left) {
+            map.set(current.left, currentLevelOfCurrent + 1);
+            queue.push(current.left);
+        }
+
+        if (current.right) {
+            map.set(current.right, currentLevelOfCurrent + 1);
+            queue.push(current.right);
+        }
     }
 
-    if (current.right) {
-      map.set(current.right, currentLevelOfCurrent + 1);
-      queue.push(current.right);
-    }
-  }
-
-  maxWidth = Math.max(maxWidth, currentLevelNodes);
-  return maxWidth;
+    maxWidth = Math.max(maxWidth, currentLevelNodes);
+    return maxWidth;
 }
 
 function getTreeMaxWidthNoMap(root) {
-  if (!root) {
-    return 0;
-  }
-
-  const queue = [];
-  queue.push(root);
-
-  let currentEnd = root;
-  let nextEnd = null;
-  let currentLevelNodes = 0;
-  let maxWidth = 0;
-
-  while (queue.length > 0) {
-    const current = queue.shift();
-
-    if (current.left) {
-      queue.push(current.left);
-      nextEnd = current.left;
+    if (!root) {
+        return 0;
     }
 
-    if (current.right) {
-      queue.push(current.right);
-      nextEnd = current.right;
+    const queue = [];
+    queue.push(root);
+
+    let currentEnd = root;
+    let nextEnd = null;
+    let currentLevelNodes = 0;
+    let maxWidth = 0;
+
+    while (queue.length > 0) {
+        const current = queue.shift();
+
+        if (current.left) {
+            queue.push(current.left);
+            nextEnd = current.left;
+        }
+
+        if (current.right) {
+            queue.push(current.right);
+            nextEnd = current.right;
+        }
+
+        currentLevelNodes++;
+
+        if (currentEnd === current) {
+            maxWidth = Math.max(maxWidth, currentLevelNodes);
+            currentLevelNodes = 0;
+            currentEnd = nextEnd;
+        }
     }
 
-    currentLevelNodes++;
-
-    if (currentEnd === current) {
-      maxWidth = Math.max(maxWidth, currentLevelNodes);
-      currentLevelNodes = 0;
-      currentEnd = nextEnd;
-    }
-  }
-
-  return maxWidth;
+    return maxWidth;
 }
 
 // test
