@@ -15,3 +15,4 @@ function s(arr, i, j) {
 
 // Test
 console.log(win([1, 2, 100, 4])); // 101
+console.log(win([1, 2, 3, 4, 5, 6])); // 12
