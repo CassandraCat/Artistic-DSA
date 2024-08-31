@@ -1,3 +1,10 @@
+/**
+ * * Selection Sort
+ * Time complexity: O(n^2)
+ * Space complexity: O(1)
+ * Train of thought: Find the minimum value in the array and swap it with the first element
+ */
+
 function selectionSort(arr) {
     for (let i = 0; i < arr.length; i++) {
         let min = i;

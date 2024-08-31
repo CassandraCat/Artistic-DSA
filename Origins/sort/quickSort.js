@@ -1,3 +1,10 @@
+/**
+ * * Quick Sort
+ * Time complexity: O(N*logN)
+ * Space complexity: O(logN)
+ * Train of thought: Choose a pivot, partition the array into two halves, and sort the two halves
+ */
+
 function quickSort(arr) {
     if (arr.length <= 1) {
         return arr;

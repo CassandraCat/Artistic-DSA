@@ -1,3 +1,10 @@
+/**
+ * * Heap Sort
+ * Time complexity: O(N*logN)
+ * Space complexity: O(1)
+ * Train of thought: Create a min heap and extract the minimum value from the heap
+ */
+
 class MinHeap {
     constructor() {
         this.heap = [];

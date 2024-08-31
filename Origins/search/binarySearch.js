@@ -1,4 +1,4 @@
-/*
+/**
  * Orderly array, looking for a specific value
  * If the target is not in the array, return -1
  */
@@ -27,7 +27,7 @@ let target = 3;
 let res = binarySearch(arr, target);
 console.log(res); // 2
 
-/*
+/**
  * Orderly array, to find the target in the left margin of the array
  * If the target is not in the array, return -1
  */
@@ -60,7 +60,7 @@ let target2 = 3;
 let res2 = binarySearchLeft(arr2, target2);
 console.log(res2); // 2
 
-/*
+/**
  * Unordered array, two adjacent numbers are not equal, find local minimum
  * Local minimum definition: a number is less than its neighbors
  */

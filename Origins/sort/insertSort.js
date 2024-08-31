@@ -1,3 +1,10 @@
+/**
+ * * Insertion Sort
+ * Time complexity: O(n^2)
+ * Space complexity: O(1)
+ * Train of thought: Insert an element from the unsorted part of the array into the sorted part of the array
+ */
+
 function insertSort(arr) {
     for (let i = 1; i < arr.length; i++) {
         let current = arr[i];

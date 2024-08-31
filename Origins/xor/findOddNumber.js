@@ -1,4 +1,12 @@
-/*
+/**
+ * * Exclusive or operation
+ * 0^N=N
+ * N^N=0
+ * a^b=b^a
+ * a^b^c=a^(b^c)
+ */
+
+/**
  * It is known that there is an array in which only one number appears an odd number of times
  * the rest of the numbers appear an even number of times.
  * Find this odd number
@@ -18,7 +26,7 @@ let arr = [1, 2, 3, 2, 3, 1, 3];
 let res = findOddNumber(arr); // 3
 console.log(res);
 
-/*
+/**
  * There are two numbers in the array that appear an odd number of times
  * the remaining numbers appear an even number of times.
  * Find these two numbers

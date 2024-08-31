@@ -1,3 +1,10 @@
+/**
+ * * Merge Sort
+ * Time complexity: O(N*logN)
+ * Space complexity: O(N)
+ * Train of thought: Divide the array into two halves, sort the two halves, and merge them
+ */
+
 function mergeSort(arr) {
     if (!arr || arr.length === 0) {
         return [];
