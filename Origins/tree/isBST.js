@@ -66,6 +66,40 @@ function isBSTWithRecursionV2Helper(node) {
     );
 }
 
+function isBSTWithMorris(head) {
+    if (!head) {
+        return;
+    }
+
+    let current = head;
+    let mostRight = null;
+    let pre = null;
+
+    while (current) {
+        mostRight = current.left;
+        if (mostRight) {
+            while (mostRight.right && mostRight.right !== current) {
+                mostRight = mostRight.right;
+            }
+
+            if (!mostRight.right) {
+                mostRight.right = current;
+                current = current.left;
+                continue;
+            } else {
+                mostRight.right = null;
+            }
+        }
+        if (pre !== null && pre > current.value) {
+            return false;
+        }
+        pre = current.value;
+        current = current.right;
+    }
+
+    return true;
+}
+
 // test
 const root = new TreeNode(4);
 root.left = new TreeNode(2);
@@ -76,3 +110,4 @@ root.right.left = new TreeNode(5);
 root.right.right = new TreeNode(7);
 console.log(isBSTWithRecursion(root)); // true
 console.log(isBSTWithRecursionV2(root)); // true
+console.log(isBSTWithMorris(root)); // true
