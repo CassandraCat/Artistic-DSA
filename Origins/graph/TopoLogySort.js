@@ -19,4 +19,6 @@ function sortedTopoLogy(graph) {
             }
         }
     }
+
+    return result;
 }

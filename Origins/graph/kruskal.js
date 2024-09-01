@@ -1,4 +1,4 @@
-const UnionFind = require("./union-find");
+const UnionFind = require("./UnionFind");
 
 function kruskal(graph) {
     const unionFind = new UnionFind(graph.nodes.values());
