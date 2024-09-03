@@ -23,11 +23,9 @@ function gcd(m, n) {
 }
 
 function bobAliveWithDP(N, M, i, j, k) {
-    let dp = new Array(N + 2)
+    let dp = new Array(N)
         .fill(0)
-        .map(() =>
-            new Array(M + 2).fill(0).map(() => new Array(k + 1).fill(0))
-        );
+        .map(() => new Array(M).fill(0).map(() => new Array(k + 1).fill(0)));
 
     for (let x = 0; x < N; x++) {
         for (let y = 0; y < M; y++) {
