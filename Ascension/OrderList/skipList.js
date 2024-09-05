@@ -1,95 +1,187 @@
 class SkipListNode {
     constructor(value) {
         this.value = value;
-        this.next = [];
+        this.nextNodes = [];
+    }
+
+    isValueLess(otherValue) {
+        return (
+            otherValue !== null &&
+            (this.value === null || this.value < otherValue)
+        );
+    }
+
+    isValueEqual(otherValue) {
+        return (
+            (this.value === null && otherValue === null) ||
+            (this.value !== null &&
+                otherValue !== null &&
+                this.value === otherValue)
+        );
     }
 }
 
 class SkipList {
     constructor() {
-        this.head = new SkipListNode();
-        this.head.next.push(null);
-        this.maxLevel = 0;
-        this.size = 0;
         this.PROBABILITY = 0.5;
+        this.head = new SkipListNode(null);
+        this.head.nextNodes.push(null);
+        this.size = 0;
+        this.maxLevel = 0;
     }
 
-    findInsertionOfTopLevel(newValue, level) {
-        let currentMaxLevel = this.maxLevel;
+    mostRightLessNodeInTree(value) {
+        let level = this.maxLevel;
         let cur = this.head;
-        while (currentMaxLevel >= level) {
-            while (
-                cur.next[currentMaxLevel] !== null &&
-                cur.next[currentMaxLevel].value < newValue
-            ) {
-                cur = cur.next[currentMaxLevel];
-            }
-            currentMaxLevel--;
+        while (level >= 0) {
+            cur = this.mostRightLessNodeInLevel(value, cur, level--);
         }
         return cur;
     }
 
-    findNextInsertion(cur, newValue, level) {
-        while (cur.next[level] !== null && cur.next[level].value < newValue) {
-            cur = cur.next[level];
+    mostRightLessNodeInLevel(value, cur, level) {
+        let next = cur.nextNodes[level];
+        while (next !== null && next.isValueLess(value)) {
+            cur = next;
+            next = cur.nextNodes[level];
         }
         return cur;
     }
 
     contains(value) {
-        if (this.size === 0) {
-            return false;
-        }
-        let cur = this.head;
-        let curLevel = this.maxLevel;
-        while (curLevel >= 0) {
-            if (cur.next[curLevel] !== null) {
-                if (cur.next[curLevel].value === value) {
-                    return true;
-                } else if (cur.next[curLevel].value < value) {
-                    cur = cur.next[curLevel];
-                } else {
-                    curLevel--;
-                }
-            } else {
-                curLevel--;
-            }
-        }
-        return false;
+        if (value === null) return false;
+        let less = this.mostRightLessNodeInTree(value);
+        let next = less.nextNodes[0];
+        return next !== null && next.isValueEqual(value);
     }
 
-    insert(newValue) {
-        if (!this.contains(newValue)) {
-            let level = 1;
-            while (Math.random() < this.PROBABILITY) {
-                level++;
-            }
+    add(value) {
+        if (value === null) return;
 
-            if (level > this.maxLevel) {
-                while (this.maxLevel < level) {
-                    this.head.next.push(null);
-                    this.maxLevel++;
-                }
-            }
+        let less = this.mostRightLessNodeInTree(value);
+        let find = less.nextNodes[0];
 
-            const newNode = new SkipListNode(newValue);
-            let cur = this.findInsertionOfTopLevel(newValue, level);
-            while (level > 0) {
-                level--;
-                newNode.next[level] = cur.next[level];
-                cur.next[level] = newNode;
-                cur = this.findNextInsertion(cur, newValue, level);
-            }
+        if (find !== null && find.isValueEqual(value)) {
+            find.value = value;
+        } else {
             this.size++;
+            let newNodeLevel = 0;
+            while (Math.random() < this.PROBABILITY) {
+                newNodeLevel++;
+            }
+
+            while (newNodeLevel > this.maxLevel) {
+                this.head.nextNodes.push(null);
+                this.maxLevel++;
+            }
+
+            const newNode = new SkipListNode(value);
+            for (let i = 0; i <= newNodeLevel; i++) {
+                newNode.nextNodes.push(null);
+            }
+
+            let level = this.maxLevel;
+            let pre = this.head;
+            while (level >= 0) {
+                pre = this.mostRightLessNodeInLevel(value, pre, level);
+                if (level <= newNodeLevel) {
+                    newNode.nextNodes[level] = pre.nextNodes[level];
+                    pre.nextNodes[level] = newNode;
+                }
+                level--;
+            }
         }
+    }
+
+    get(value) {
+        if (value === null) return null;
+        let less = this.mostRightLessNodeInTree(value);
+        let next = less.nextNodes[0];
+        return next !== null && next.isValueEqual(value) ? next.value : null;
+    }
+
+    remove(value) {
+        if (this.contains(value)) {
+            this.size--;
+            let level = this.maxLevel;
+            let pre = this.head;
+            while (level >= 0) {
+                pre = this.mostRightLessNodeInLevel(value, pre, level);
+                let next = pre.nextNodes[level];
+                if (next !== null && next.isValueEqual(value)) {
+                    pre.nextNodes[level] = next.nextNodes[level];
+                }
+                if (
+                    level !== 0 &&
+                    pre === this.head &&
+                    pre.nextNodes[level] === null
+                ) {
+                    this.head.nextNodes.pop();
+                    this.maxLevel--;
+                }
+                level--;
+            }
+        }
+    }
+
+    firstValue() {
+        return this.head.nextNodes[0] !== null
+            ? this.head.nextNodes[0].value
+            : null;
+    }
+
+    lastValue() {
+        let level = this.maxLevel;
+        let cur = this.head;
+        while (level >= 0) {
+            let next = cur.nextNodes[level];
+            while (next !== null) {
+                cur = next;
+                next = cur.nextNodes[level];
+            }
+            level--;
+        }
+        return cur.value;
+    }
+
+    ceilingValue(value) {
+        if (value === null) return null;
+        let less = this.mostRightLessNodeInTree(value);
+        let next = less.nextNodes[0];
+        return next !== null ? next.value : null;
+    }
+
+    floorValue(value) {
+        if (value === null) return null;
+        let less = this.mostRightLessNodeInTree(value);
+        let next = less.nextNodes[0];
+        return next !== null && next.isValueEqual(value) ? value : less.value;
+    }
+
+    getSize() {
+        return this.size;
     }
 }
 
-// Test Cases
-const skipList = new SkipList();
-skipList.insert(1);
-skipList.insert(2);
-skipList.insert(3);
-skipList.insert(4);
-skipList.insert(5);
-console.log(skipList);
+function printAll(obj) {
+    for (let i = obj.maxLevel; i >= 0; i--) {
+        let levelOutput = `Level ${i} : `;
+        let cur = obj.head;
+        while (cur.nextNodes[i] !== null) {
+            let next = cur.nextNodes[i];
+            levelOutput += `(${next.value}) `;
+            cur = next;
+        }
+        console.log(levelOutput);
+    }
+}
+
+// Test Case
+let skipList = new SkipList();
+skipList.add(3);
+skipList.add(2);
+skipList.add(1);
+skipList.add(4);
+skipList.add(5);
+printAll(skipList);
+console.log(skipList.contains(3)); // true
